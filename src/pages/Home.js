@@ -163,7 +163,7 @@ export default () => {
                                       </div>
                                       <p className="tag">{post.tag}</p>
                                     </div>
-                                    <p className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius ullamcorper vestibulum. Fusce vitae enim ante. Nulla tortor odio, tincidunt sit amet convallis eu, consequat quis massa. Suspendisse ut ultricies odio. Quisque dolor sapien, posuere sed euismod vel, bibendum sed tortor. </p>
+                                    <p className="description">LoLo Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius ullamcorper vestibulum. Fusce vitae enim ante. Nulla tortor odio, tincidunt sit amet convallis eu, consequat quis massa. Suspendisse ut ultricies odio. Quisque dolor sapien, posuere sed euismod vel, bibendum sed tortor. </p>
                                   </div>
                                 </Link>
                               </li>
