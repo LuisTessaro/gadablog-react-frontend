@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API
+  baseURL: 'https://gadablog-rest-api.herokuapp.com/'
 })
 
 export default api
