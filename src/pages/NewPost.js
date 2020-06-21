@@ -10,6 +10,8 @@ import { colors } from '../Styles/StyleGuide'
 
 import Container from '../Styles/Styled-Components/Container'
 
+import indexToCategory from '../Utils/indexToCategory'
+
 import parser from 'html-react-parser'
 
 import {
@@ -21,6 +23,7 @@ import {
   FooterInfo,
   Author,
   RelatedPosts,
+  Tag,
 } from '../Styles/Styled-Components/BlogPost'
 
 const CreationPage = styled.div`
@@ -50,6 +53,15 @@ const Builder = styled.div`
   }
   
   input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:100%;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+
+  select {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -92,6 +104,16 @@ const Button = styled.a`
 `
 
 export default () => {
+
+  // {
+  //   "title_image",
+  //   "tagList",
+  //   "post_title",
+  //   "about",
+  //   "category",
+  //   "content",
+  // }
+
   const related_posts = {
     "main": {
       "tag": "Category",
@@ -103,13 +125,18 @@ export default () => {
     }
   }
 
-  const [content, setContent] = useState('')
-  const [_content, _setContent] = useState('')
   const [title_image, settitle_image] = useState('')
-  const [tags, settags] = useState('')
-  const [category, setcategory] = useState('')
+  const [_title_image, _settitle_image] = useState('')
+  const [tagList, settagList] = useState('')
+  const [_tagList, _settagList] = useState('')
   const [post_title, setpost_title] = useState('')
+  const [_post_title, _setpost_title] = useState('')
   const [about, setabout] = useState('')
+  const [_about, _setabout] = useState('')
+  const [category, setcategory] = useState('')
+  const [_category, _setcategory] = useState('')
+  const [content, setcontent] = useState('')
+  const [_content, _setcontent] = useState('')
 
   const submit = async (values) => {
     try {
@@ -134,24 +161,40 @@ export default () => {
       <CreationPage>
         <Builder>
           <h1>Imagem do Título:</h1>
-          <input onChange={(e) => settitle_image(e.target.value)} type="text" />
+          <input onChange={(e) => _settitle_image(e.target.value)} type="text" />
 
           <h1>Tags:</h1>
-          <input onChange={(e) => settags(e.target.value)} type="text" />
+          <input onChange={(e) => _settagList(e.target.value)} type="text" />
 
           <h1>Categoria:</h1>
-          <input onChange={(e) => setcategory(e.target.value)} type="text" />
+
+          <select value={_category} onChange={(e) => _setcategory(e.target.value)}>
+            <option value={1}>Gaems</option>
+            <option value={2}>Programação</option>
+            <option value={3}>Dicas</option>
+            <option value={4}>Hot Takes</option>
+            <option value={5}>Opnião</option>
+          </select>
 
           <h1>Título do Post:</h1>
-          <input onChange={(e) => setpost_title(e.target.value)} type="text" />
+          <input onChange={(e) => _setpost_title(e.target.value)} type="text" />
 
           <h1>Breve descrição do Post:</h1>
-          <input onChange={(e) => setabout(e.target.value)} type="text" />
+          <input onChange={(e) => _setabout(e.target.value)} type="text" />
 
           <h1>Conteúdo do post:</h1>
-          <textarea onChange={(e) => _setContent(e.target.value)}>
+          <textarea onChange={(e) => _setcontent(e.target.value)}>
           </textarea>
-          <Button onClick={() => setContent(_content)} style={{ position: 'fixed', bottom: '106px', left: '8px' }}>Ver Preview</Button>
+
+          <Button onClick={() => {
+            setcontent(_content)
+            settitle_image(_title_image)
+            settagList(_tagList)
+            setcategory(_category)
+            setpost_title(_post_title)
+            setabout(_about)
+            setcontent(_content)
+          }} style={{ position: 'fixed', bottom: '106px', left: '8px' }}>Ver Preview</Button>
 
 
         </Builder>
@@ -161,7 +204,7 @@ export default () => {
             <Image src={title_image} />
 
             <PostTitle>
-              <p>{category}</p>
+              <p>{indexToCategory(category)}</p>
               <h1>{post_title}</h1>
             </PostTitle>
 
@@ -177,7 +220,20 @@ export default () => {
 
             <PostFooter>
               <FooterInfo>
-                <div className="tags"><i className="fas fa-tags" />{tags}</div>
+                <div className="tags"><i className="fas fa-tags" />
+                  {tagList.replace(/\s/g,'').trim().split(',').map((tag, i, arr) =>
+                    <Tag
+                      key={i}
+                      as={Link}
+                      to={{
+                        pathname: "/tags",
+                        search: `?tag=${tag}`,
+                      }}
+                    >
+                      {`${tag}${arr.length !== i + 1 ? ', ' : ''}`}
+                    </Tag>
+                  )}
+                </div>
                 <div className="share"><i className="fas fa-share-alt" />Share this post</div>
               </FooterInfo>
 
@@ -193,20 +249,6 @@ export default () => {
                 </div>
 
               </Author>
-
-              <RelatedPosts>
-                <h1>Postagems relacionadas</h1>
-                <div className="post-list">
-                  <div className="main">
-                    <h2>{related_posts.main.tag}</h2>
-                    <h1>{related_posts.main.title}</h1>
-                  </div>
-                  <div className="alt">
-                    <h2>{related_posts.alt.tag}</h2>
-                    <h1>{related_posts.alt.title}</h1>
-                  </div>
-                </div>
-              </RelatedPosts>
             </PostFooter>
           </>
         </Preview>
@@ -216,7 +258,7 @@ export default () => {
         <Button as={Link} to='/' onClick={() => submit({
           related_posts,
           title_image,
-          tags,
+          tagList,
           category,
           post_title,
           about,
