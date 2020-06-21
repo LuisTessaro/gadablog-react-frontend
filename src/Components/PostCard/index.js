@@ -12,7 +12,7 @@ export default ({ post }) => {
     <Link to={`/post/${post.url}`}>
 
       <img onLoad={() => setLoaded(true)} style={{ display: loaded ? 'block' : 'none' }} src={post.title_image} alt="post" />
-      <div style={{ display: loaded ? 'none' : 'flex', minHeight: 200, minWidth: 280, justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ display: loaded ? 'none' : 'flex', minHeight: 200, minWidth: 310, justifyContent: 'center', alignItems: 'center' }}>
         <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
       </div>
 

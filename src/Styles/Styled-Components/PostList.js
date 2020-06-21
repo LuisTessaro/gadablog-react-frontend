@@ -81,7 +81,7 @@ export default styled.ul`
 
       .description {
         font-weight: 400;
-        overflow: auto;
+        
         /* width */
         ::-webkit-scrollbar {
           width: 10px;

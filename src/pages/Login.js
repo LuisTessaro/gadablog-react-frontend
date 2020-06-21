@@ -78,6 +78,7 @@ export default () => {
     try {
       const { data } = await services.post(`/api/auth/`, values)
       localStorage.setItem('token', data.token)
+      localStorage.setItem('logedin', true)
       setSubmitting(false)
       setLoggedin(true)
     } catch (e) {
@@ -93,7 +94,7 @@ export default () => {
           ?
           <>
             <LoginForm>
-              <Button as={Link} to="/new">Criar um post</Button>
+              <Button as={Link} to="/new_post">Criar um post</Button>
               <Button as={Link} to="/">Home</Button>
             </LoginForm>
           </>

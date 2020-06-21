@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -38,6 +38,10 @@ const Title = styled.h1`
 `
 
 export default () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <Page404>
       <SpacerTop multiplier={12} />

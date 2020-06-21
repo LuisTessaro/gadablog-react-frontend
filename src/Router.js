@@ -20,10 +20,7 @@ export default (props) => {
         <MainLayout exact path="/post/:id" component={BlogPost} {...props} />
         <MainLayout exact path="/category/:id" component={Categories} {...props} />
         <Route exact path="/login" component={Login} />
-        {
-          localStorage.getItem('token') &&
-          <Route exact path="/new" component={NewPost} />
-        }
+        <Route exact path="/new_post" component={NewPost} />
         <MainLayout exact path="*" component={Page404} />
       </Switch>
     </BrowserRouter>
