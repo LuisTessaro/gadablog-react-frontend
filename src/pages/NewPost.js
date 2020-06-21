@@ -169,6 +169,7 @@ export default () => {
           <h1>Categoria:</h1>
 
           <select value={_category} onChange={(e) => _setcategory(e.target.value)}>
+            <option value={0}>---</option>
             <option value={1}>Gaems</option>
             <option value={2}>Programação</option>
             <option value={3}>Dicas</option>
