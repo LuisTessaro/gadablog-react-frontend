@@ -40,6 +40,7 @@ export const SideContent = styled.div`
 `
 
 export const GradientCard = styled.div`
+  margin-top: 32px;
   background-image: linear-gradient(to top right, ${colors.dark} 20%, ${colors.main});
   width: 100%;
   min-height: 375px;
@@ -73,7 +74,7 @@ export const GradientCard = styled.div`
 
 export const SearchBox = styled.div`
   position: relative;
-
+  margin-top: 48px;
   input{
     width: 100%;
     box-sizing: border-box;
@@ -99,6 +100,7 @@ export const SearchBox = styled.div`
 `
 
 export const Categories = styled.div`
+  margin-top: 32px;
   h1{
     color: ${colors.main};
     font-size: ${fonts.h1};
@@ -147,6 +149,7 @@ export const Categories = styled.div`
 `
 
 export const HighestSeenPosts = styled.div`
+  margin-top: 32px;
   h1{
     color: ${colors.main};
     font-size: ${fonts.h1};
@@ -185,6 +188,7 @@ export const HighestSeenPosts = styled.div`
 `
 
 export const Tags = styled.div`
+  margin-top: 32px;
   h1 {
     color: ${colors.main};
     font-size: ${fonts.h1};
@@ -401,4 +405,12 @@ export const RelatedPosts = styled.div`
       }
     }
   }  
+`
+
+export const Tag = styled.a`
+  color: ${colors.main};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `

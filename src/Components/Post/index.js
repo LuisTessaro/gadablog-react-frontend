@@ -9,6 +9,8 @@ import PostFooter from './PostFooter'
 
 import { MiddlePos, LoadIcon } from '../../Styles/Styled-Components/Loader'
 
+import services from '../../Utils/services'
+
 export default ({ postId }) => {
   const [author, setAuthor] = useState(null)
   const [post, setPost] = useState(null)
@@ -16,7 +18,7 @@ export default ({ postId }) => {
 
   const fetchAuthor = async (id) => {
     try {
-      const _author = await axios.get(`https://gadablog-rest-api.herokuapp.com/api/user/${id}`)
+      const _author = await services.get(`/api/user/${id}`)
       const { name, photo, about, } = _author.data
       setAuthor({ name, photo, about })
     } catch (e) {
@@ -27,12 +29,13 @@ export default ({ postId }) => {
 
   const fetchPost = async (postId) => {
     try {
-      const _post = await axios.get(`https://gadablog-rest-api.herokuapp.com/api/post/${postId}`)
+      const _post = await services.get(`/api/post/${postId}`)
       const {
         _id,
         related_posts,
         title_image,
-        tag,
+        tagList,
+        category,
         post_title,
         author_id,
         content,
@@ -40,10 +43,13 @@ export default ({ postId }) => {
 
       fetchAuthor(author_id)
 
+      console.log(content)
+
       setPost({
         title_image,
-        tag,
+        tagList,
         post_title,
+        category,
         creation_date: moment(new Date(parseInt(author_id.toString().substring(0, 8), 16) * 1000).toString()).format("DD/MM/YYYY"),
         post_id: _id,
         author_id,

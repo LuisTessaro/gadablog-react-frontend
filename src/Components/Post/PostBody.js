@@ -9,6 +9,8 @@ import {
 
 import RichTextViewer from '../RichTextViewer'
 
+import indexToCategory from '../../Utils/indexToCategory'
+
 export default ({
   post,
   author,
@@ -19,7 +21,7 @@ export default ({
       <Image src={post.title_image} />
 
       <PostTitle>
-        <p>{post.tag}</p>
+        <p>{indexToCategory(post.category)}</p>
         <h1>{post.post_title}</h1>
       </PostTitle>
 

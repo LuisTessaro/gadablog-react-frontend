@@ -7,13 +7,14 @@ import { Link } from 'react-router-dom'
 
 import { colors } from '../../Styles/StyleGuide'
 
-const Menu = () => {
-  return (
-    <ul>
-      <a href={"http://luistessaro.github.io/"}><i className="fas fa-user-plus"/></a>
-    </ul>
-  )
-}
+const LoginButton = styled.a`
+  color: white;
+  background-color: lightgreen;
+  border-radius: 5px;
+  padding: 16px 32px;
+  font-weight: 700;
+  margin-left: 16px;
+`
 
 const HeaderStyle = styled.div`
   min-width: 84px;
@@ -50,7 +51,7 @@ const HeaderStyle = styled.div`
         padding: 0 16px;
         font-weight: 700;
         font-size: 1.3rem;
-        @media (max-width: 420px) {
+        @media (max-width: 620px) {
           display: none;
         }
       }
@@ -60,7 +61,7 @@ const HeaderStyle = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      a, p {
+      a.send-to {
         color: ${colors.white};
         padding: 0 16px;
         margin-left: 16px;
@@ -77,14 +78,40 @@ const HeaderStyle = styled.div`
   }
 `
 
+const Menu = () => {
+  return (
+    <ul>
+      <a className="send-to" href={"http://luistessaro.github.io/"}><i className="fas fa-user-plus" /></a>
+      <LoginButton as={Link} to="/login">Login</LoginButton>
+    </ul>
+  )
+}
+
+const MenuLogged = ({ logout }) => {
+  return (
+    <ul>
+      <LoginButton as={Link} to="/posts">Ver meus Posts</LoginButton>
+      <LoginButton as={Link} to="/new">Criar Post</LoginButton>
+      <LoginButton onClick={logout}>Logout</LoginButton>
+    </ul>
+  )
+}
 
 export default () => {
   const [isPost, setIsPost] = useState(false)
+  const [loggedin, setLoggedin] = useState(false)
 
   useEffect(() => {
-    console.log(window.location.pathname)
+    if (localStorage.getItem('token'))
+      setLoggedin(true)
+
     setIsPost(window.location.pathname !== '/' ? true : false)
   }, [])
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setLoggedin(false)
+  }
 
   return (
     <>
@@ -95,7 +122,16 @@ export default () => {
             <img alt="gadaba-logo" src="/img/logo.png" />
             <h1>GadaBlog</h1>
           </div>
-          <Menu />
+          {loggedin
+            ?
+            <>
+              <MenuLogged logout={logout} />
+            </>
+            :
+            <>
+              <Menu />
+            </>
+          }
         </div>
       </HeaderStyle>
     </>

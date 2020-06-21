@@ -1,11 +1,13 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 import {
-  SpacerTop,
   PostFooter,
   FooterInfo,
   Author,
   RelatedPosts,
+  Tag,
 } from '../../Styles/Styled-Components/BlogPost'
 
 export default ({ author, post }) => {
@@ -13,10 +15,23 @@ export default ({ author, post }) => {
     <>
       <PostFooter>
         <FooterInfo>
-          <div className="tags"><i className="fas fa-tags" />{post.tag}</div>
+          <div className="tags">
+            <i className="fas fa-tags" />
+            {post.tagList.map((tag, i, arr) =>
+              <Tag
+                key={i}
+                as={Link}
+                to={{
+                  pathname: "/tags",
+                  search: `?tag=${tag}`,
+                }}
+              >
+                {`${tag}${arr.length !== i + 1 ? ', ' : ''}`}
+              </Tag>
+            )}
+          </div>
           <div className="share"><i className="fas fa-share-alt" />Share this post</div>
         </FooterInfo>
-
         <Author>
           <img src={author.photo} alt="profile" />
 

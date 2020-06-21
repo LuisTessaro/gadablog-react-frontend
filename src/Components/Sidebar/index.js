@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import {
-  SpacerTop,
   GradientCard,
   SearchBox,
   Categories,
@@ -9,17 +9,30 @@ import {
   Tags,
 } from '../../Styles/Styled-Components/BlogPost'
 
+import indexToCategory from '../../Utils/indexToCategory'
+import services from '../../Utils/services'
+
 export default () => {
+  const [categories, setCategories] = useState(null)
+  const [higestSeen, setHigestSeen] = useState(null)
+  const [featured, setFeatured] = useState(null)
+  const [featureTags, setFeatureTags] = useState(null)
+
+  const fetchInfos = () => {
+    const requests = []
+    
+  }
+
+  useEffect(() => {
+    fetchInfos()
+  }, [])
+
   return (
     <>
-      <SpacerTop multiplier={12} />
-
       <SearchBox>
         <input type="text" id="name" name="name" placeholder="Buscar por palavra" />
         <i className="fas fa-search" />
       </SearchBox>
-
-      <SpacerTop multiplier={8} />
 
       <Categories>
         <h1>Categorias</h1>
@@ -32,8 +45,6 @@ export default () => {
           <li><p>Opnião</p><span>2</span></li>
         </ul>
       </Categories>
-
-      <SpacerTop multiplier={8} />
 
       <HighestSeenPosts>
         <h1>Postagens mais vistas</h1>
@@ -57,8 +68,6 @@ export default () => {
         </ul>
       </HighestSeenPosts>
 
-      <SpacerTop multiplier={8} />
-
       <GradientCard>
         <h1>Conheça o nosso cantor: Fukumoto</h1>
         <p>O mestre da Wonderwall</p>
@@ -66,8 +75,6 @@ export default () => {
         <p>Sugação o dia todo</p>
         <div className="button">Ir para o canal 	&#62;</div >
       </GradientCard>
-
-      <SpacerTop multiplier={8} />
 
       <Tags>
         <h1>Tags</h1>

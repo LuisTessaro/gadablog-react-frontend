@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-import axios from 'axios'
-
 import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
@@ -14,12 +12,39 @@ import { MiddlePos, LoadIcon } from '../Styles/Styled-Components/Loader'
 
 import { colors, spacers } from '../Styles/StyleGuide'
 
+import services from '../Utils/services'
+
 import {
   BodyStyle,
   Content,
   SideContent,
   SpacerTop,
 } from '../Styles/Styled-Components/BlogPost'
+
+const PostCard = ({ post }) => {
+  const [loaded, setLoaded] = useState(false)
+
+  return (
+    <Link to={`/post/${post.url}`}>
+
+      <img onLoad={() => setLoaded(true)} style={{ display: loaded ? 'block' : 'none' }} src={post.title_image} alt="post" />
+      <div style={{ display: loaded ? 'none' : 'flex', minHeight: 200, minWidth: 350, justifyContent: 'center', alignItems: 'center' }}>
+        <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+      </div>
+
+      <div className="info">
+        <div>
+          <div className="top">
+            <h1>{post.post_title}</h1>
+            <i className="fa fa-chevron-right" />
+          </div>
+          <p className="tag">{post.tag}</p>
+        </div>
+        <p className="description">{post.about}</p>
+      </div>
+    </Link>
+  )
+}
 
 const PostList = styled.ul`
   a {
@@ -36,7 +61,7 @@ const PostList = styled.ul`
     color:gray;
 
     &:hover {
-      i{
+      i.fa-chevron-right {
         transform: translateX(10px);
       }
     }
@@ -49,6 +74,8 @@ const PostList = styled.ul`
       object-fit: cover;
       width: 350px;
       height: 200px;
+      min-width: 350px;
+      min-height: 200px;
       padding-right: 16px;
     }
 
@@ -112,7 +139,7 @@ export default () => {
 
   const fetchPosts = async () => {
     try {
-      const _posts = await axios.get(`https://gadablog-rest-api.herokuapp.com/api/post/`)
+      const _posts = await services.get(`api/post/`)
       setPosts(_posts.data)
     } catch (e) {
       setFailed(true)
@@ -127,64 +154,39 @@ export default () => {
     window.scrollTo(0, 0)
   }, [])
 
-
-
   return (
     <>
-      <Header />
-      <div className="container">
-        <BodyStyle>
-          <Content>
+      {
+        failed
+          ?
+          <>
+            <SpacerTop multiplier={12} />
+            <h1>Back morreu men me manda mensagem ai</h1>
+          </>
+          :
+          <>
             {
-              failed
+              posts
                 ?
                 <>
                   <SpacerTop multiplier={12} />
-                  <h1>Back morreu men me manda mensagem ai</h1>
+                  <PostList>
+                    {posts.map((post, i) => {
+                      return (
+                        <li key={i}>
+                          <PostCard post={post} />
+                        </li>
+                      )
+                    })}
+                  </PostList>
                 </>
                 :
-                <>
-                  {
-                    posts
-                      ?
-                      <>
-                        <SpacerTop multiplier={12} />
-                        <PostList>
-                          {posts.map((post, i) => {
-                            return (
-                              <li key={i}>
-                                <Link to={`/post/${post._id}`}>
-                                  <img alt="post" src={post.title_image} />
-                                  <div className="info">
-                                    <div>
-                                      <div className="top">
-                                        <h1>{post.post_title}</h1>
-                                        <i className="fa fa-chevron-right" />
-                                      </div>
-                                      <p className="tag">{post.tag}</p>
-                                    </div>
-                                    <p className="description">LoLo Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius ullamcorper vestibulum. Fusce vitae enim ante. Nulla tortor odio, tincidunt sit amet convallis eu, consequat quis massa. Suspendisse ut ultricies odio. Quisque dolor sapien, posuere sed euismod vel, bibendum sed tortor. </p>
-                                  </div>
-                                </Link>
-                              </li>
-                            )
-                          })}
-                        </PostList>
-                      </>
-                      :
-                      <MiddlePos>
-                        <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
-                      </MiddlePos>
-                  }
-                </>
+                <MiddlePos>
+                  <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+                </MiddlePos>
             }
-          </Content>
-          <SideContent>
-            <Sidebar />
-          </SideContent>
-        </BodyStyle>
-      </div>
-      <Footer />
+          </>
+      }
     </>
   )
 }
