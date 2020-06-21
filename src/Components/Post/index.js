@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { Redirect } from 'react-router-dom'
+
 import moment from 'moment'
 
 import PostBody from './PostBody'
@@ -79,7 +81,7 @@ export default ({ postId }) => {
       {failed
         ?
         <>
-          <h1>POST NÃO ENCONTRADO!!!!</h1>
+          <Redirect to="/page404" />
         </>
         :
         <>

@@ -9,6 +9,7 @@ import {
   Login,
   NewPost,
   Categories,
+  Page404,
 } from './pages'
 
 export default (props) => {
@@ -23,7 +24,7 @@ export default (props) => {
           localStorage.getItem('token') &&
           <Route exact path="/new" component={NewPost} />
         }
-        <Route exact path="*" component={() => <div>Num tem nada aqui sinho</div>} />
+        <MainLayout exact path="*" component={Page404} />
       </Switch>
     </BrowserRouter>
   )
