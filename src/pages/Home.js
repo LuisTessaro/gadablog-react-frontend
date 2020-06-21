@@ -4,20 +4,13 @@ import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import Sidebar from '../Components/Sidebar'
-import Footer from '../Components/Footer'
-import Header from '../Components/Header'
-
 import { MiddlePos, LoadIcon } from '../Styles/Styled-Components/Loader'
 
-import { colors, spacers } from '../Styles/StyleGuide'
+import { colors } from '../Styles/StyleGuide'
 
 import services from '../Utils/services'
 
 import {
-  BodyStyle,
-  Content,
-  SideContent,
   SpacerTop,
 } from '../Styles/Styled-Components/BlogPost'
 

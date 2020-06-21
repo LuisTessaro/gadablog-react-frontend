@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+// import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   GradientCard,
@@ -16,11 +17,11 @@ import indexToCategory from '../../Utils/indexToCategory'
 import services from '../../Utils/services'
 
 export default () => {
-  const history = useHistory()
+  // const history = useHistory()
   const [categories, setCategories] = useState(null)
   const [higestSeen, setHigestSeen] = useState(null)
   const [featured, setFeatured] = useState(null)
-  const [featureTags, setFeatureTags] = useState(null)
+  // const [featureTags, setFeatureTags] = useState(null)
 
   const fetchCats = async () => {
     const { data } = await services.get('/api/info/categories/')

@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from 'react'
-
-import axios from 'axios'
+import React, { useState } from 'react'
 
 import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import Sidebar from '../Components/Sidebar'
-import Footer from '../Components/Footer'
-import Header from '../Components/Header'
-
-import { MiddlePos, LoadIcon } from '../Styles/Styled-Components/Loader'
-
-import { colors, spacers } from '../Styles/StyleGuide'
-
 import services from '../Utils/services'
 
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-
-import {
-  BodyStyle,
-  Content,
-  SideContent,
-  SpacerTop,
-} from '../Styles/Styled-Components/BlogPost'
 
 const LoginPage = styled.div`
   height: 100vh;

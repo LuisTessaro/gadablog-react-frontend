@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-import axios from 'axios'
-
 import moment from 'moment'
 
 import PostBody from './PostBody'
@@ -41,6 +39,7 @@ export default ({ postId }) => {
         post_title,
         author_id,
         content,
+        url,
       } = _post.data
 
       fetchAuthor(author_id)
@@ -55,6 +54,7 @@ export default ({ postId }) => {
         author_id,
         related_posts,
         content,
+        url,
       })
     } catch (e) {
       setFailed(true)

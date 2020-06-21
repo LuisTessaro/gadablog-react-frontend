@@ -10,6 +10,17 @@ import {
   Tag,
 } from '../../Styles/Styled-Components/BlogPost'
 
+import {
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  EmailIcon,
+  EmailShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+} from 'react-share'
+
 export default ({ author, post }) => {
   return (
     <>
@@ -30,7 +41,22 @@ export default ({ author, post }) => {
               </Tag>
             )}
           </div>
-          <div className="share"><i className="fas fa-share-alt" />Share this post</div>
+          <div className="share">
+            <p><i className="fas fa-share-alt" />Share this post</p>
+            <TwitterShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+              <TwitterIcon size={32} round={true} />
+            </TwitterShareButton>
+            <FacebookShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+              <FacebookIcon size={32} round={true} />
+            </FacebookShareButton>
+            <EmailShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+              <EmailIcon size={32} round={true} />
+            </EmailShareButton>
+            <LinkedinShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+              <LinkedinIcon size={32} round={true} />
+            </LinkedinShareButton>
+          </div>
+
         </FooterInfo>
         <Author>
           <img src={author.photo} alt="profile" />

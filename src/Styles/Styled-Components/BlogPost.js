@@ -284,7 +284,7 @@ export const FooterInfo = styled.div`
   margin-bottom: ${spacers.margin};
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 
   .tags {
     color: ${colors.main};
@@ -295,12 +295,15 @@ export const FooterInfo = styled.div`
   }
   .share {
     font-weight: 500;
+    p {
+      padding-bottom: 16px;
+    }
     color: ${colors.dark};
     i{
       padding-right: 5px;
     }
   }
-`
+  `
 
 export const Author = styled.div`
   display: flex;

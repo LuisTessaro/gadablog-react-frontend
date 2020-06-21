@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import axios from 'axios'
 
@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import { colors, spacers } from '../Styles/StyleGuide'
+import { colors } from '../Styles/StyleGuide'
 
 import Container from '../Styles/Styled-Components/Container'
 
@@ -22,8 +22,6 @@ import {
   Author,
   RelatedPosts,
 } from '../Styles/Styled-Components/BlogPost'
-
-import services from '../Utils/services'
 
 const CreationPage = styled.div`
   width: 100vw;
