@@ -73,24 +73,35 @@ const HeaderStyle = styled.div`
   }
 `
 
+
+const Bg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: ${props => props.open ? 'block' : 'none'};
+  height: 100vh;
+  width: 100vw;
+  z-index: 500;
+  background-color: rgba(0, 0, 0, 0.2);
+`
 const Hamb = styled.div`
   transform: translateX(${props => props.open ? '0' : '-1000px'});
   position: fixed;
-  top: 84px;
+  top: 0;
   left: 0;
   width: 375px;
   min-height: 100vh;
   background-color: #fff;
-  z-index: 1000;
-
+  
   transition: all 0.2s ease-in-out;
+  z-index: 1000;
 
   li {
     display: flex;
     width: 100%;
     box-sizing: border-box;
     
-    a {
+    a, .back {
       display: flex;
       align-items: center;
       jusitfy-content: space-between;
@@ -192,9 +203,10 @@ export default ({ match }) => {
           <Menu />
         </div>
       </HeaderStyle >
+      <Bg onClick={() => setOpen(false)} open={open} />
       <Hamb open={open}>
-        {/* <div className="bg" /> */}
         <ul>
+          <li><div className="back" onClick={() => setOpen(false)}><i className="fas fa-arrow-left" /><p>Fechar</p></div></li>
           <li><Link to="/login"><i className="fas fa-sign-in-alt" /><p>Login</p></Link></li>
           {/* <li><Link to="/categories"><i className="fas fa-list-ul" /><p>Categorias</p></Link></li> */}
           <li><a href="https://luistessaro.github.io/"><i className="fas fa-user" /><p>Contato</p></a></li>
