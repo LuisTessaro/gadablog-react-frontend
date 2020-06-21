@@ -43,18 +43,20 @@ export default ({ author, post }) => {
           </div>
           <div className="share">
             <p><i className="fas fa-share-alt" />Share this post</p>
-            <TwitterShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
-              <TwitterIcon size={32} round={true} />
-            </TwitterShareButton>
-            <FacebookShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
-              <FacebookIcon size={32} round={true} />
-            </FacebookShareButton>
-            <EmailShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
-              <EmailIcon size={32} round={true} />
-            </EmailShareButton>
-            <LinkedinShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
-              <LinkedinIcon size={32} round={true} />
-            </LinkedinShareButton>
+            <div className="links">
+              <TwitterShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+                <TwitterIcon size={32} round={true} />
+              </TwitterShareButton>
+              <FacebookShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+                <FacebookIcon size={32} round={true} />
+              </FacebookShareButton>
+              <EmailShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+                <EmailIcon size={32} round={true} />
+              </EmailShareButton>
+              <LinkedinShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+                <LinkedinIcon size={32} round={true} />
+              </LinkedinShareButton>
+            </div>
           </div>
 
         </FooterInfo>

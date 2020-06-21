@@ -302,8 +302,20 @@ export const FooterInfo = styled.div`
     i{
       padding-right: 5px;
     }
+
+    
   }
-  `
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    .tags {
+      margin-bottom: 16px;
+    }
+    .share {
+      margin-bottom: 16px;
+    }
+  }
+`
 
 export const Author = styled.div`
   display: flex;

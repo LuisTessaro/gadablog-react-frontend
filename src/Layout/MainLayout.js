@@ -18,7 +18,7 @@ const MainLayout = ({ component: Component, ...rest }) => {
       render={(props) => {
         return (
           <main>
-            <Header />
+            <Header  {...props} />
             <div className="container">
               <BodyStyle>
                 <Content>

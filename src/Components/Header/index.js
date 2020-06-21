@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import classNames from 'classnames'
-
 import { Link } from 'react-router-dom'
 
 import { colors } from '../../Styles/StyleGuide'
 
-const LoginButton = styled.a`
+const LoginButton = styled.i`
   color: white;
   background-color: lightgreen;
   border-radius: 5px;
   padding: 16px 32px;
   font-weight: 700;
-  margin-left: 16px;
+  cursor: pointer;
 `
 
 const HeaderStyle = styled.div`
@@ -33,14 +31,11 @@ const HeaderStyle = styled.div`
       display: flex;
       align-items: center;
 
-      .fa.fa-chevron-left {
+      i {
         color: ${colors.white};
         margin-right: 16px;
         font-size: 2rem;
-        display: none;
-      }
-      .fa.fa-chevron-left.active {
-        display: block;
+        cursor: pointer;
       }
 
       img {
@@ -48,7 +43,7 @@ const HeaderStyle = styled.div`
       }
       h1 {
         color: ${colors.white};
-        padding: 0 16px;
+        padding-left: 4px;
         font-weight: 700;
         font-size: 1.3rem;
         @media (max-width: 620px) {
@@ -78,16 +73,62 @@ const HeaderStyle = styled.div`
   }
 `
 
+const Hamb = styled.div`
+  transform: translateX(${props => props.open ? '0' : '-1000px'});
+  position: fixed;
+  top: 84px;
+  left: 0;
+  width: 375px;
+  min-height: 100vh;
+  background-color: #fff;
+  z-index: 1000;
+
+  transition: all 0.2s ease-in-out;
+
+  li {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    
+    a {
+      display: flex;
+      align-items: center;
+      jusitfy-content: space-between;
+      width: 100%;
+      border-bottom: 1px solid lightgray;
+      padding: 16px;
+      i {
+        // width: 100%;
+        color: ${colors.main};
+      }
+      p {
+        color: ${colors.main};
+        width: 100%;
+        text-align: center; 
+      }
+      
+      &:hover {
+        background-color: ${colors.main};
+        i {
+          color: ${colors.white};
+        }
+        p {
+          color: ${colors.white};
+        }
+      }
+    }
+  }
+`
+
 const Menu = () => {
   return (
     <ul>
-      <a className="send-to" href={"http://luistessaro.github.io/"}><i className="fas fa-user-plus" /></a>
-      <LoginButton as={Link} to="/login">Login</LoginButton>
+      <li><Link to='/login'><LoginButton className="fas fa-sign-in-alt" /></Link></li>
     </ul>
   )
 }
 
-const MenuLogged = ({ logout }) => {
+const MenuLogged = ({ logout, match }) => {
   return (
     <ul>
       <LoginButton as={Link} to="/posts">Ver meus Posts</LoginButton>
@@ -97,20 +138,33 @@ const MenuLogged = ({ logout }) => {
   )
 }
 
-export default () => {
-  const [isPost, setIsPost] = useState(false)
+export default ({ match }) => {
+  const matchedUrl = match.url
+
   const [loggedin, setLoggedin] = useState(false)
+  const [isHome, setIsHome] = useState(matchedUrl !== '/' ? false : true)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (localStorage.getItem('token'))
-      setLoggedin(true)
-
-    setIsPost(window.location.pathname !== '/' ? true : false)
-  }, [])
+    if (matchedUrl !== '/')
+      setIsHome(false)
+    else
+      setIsHome(true)
+  }, [matchedUrl])
 
   const logout = () => {
     localStorage.removeItem('token')
     setLoggedin(false)
+  }
+
+  if (loggedin) {
+    return (
+      <HeaderStyle>
+        <div className="container">
+          <MenuLogged logout={logout} />
+        </div>
+      </HeaderStyle>
+    )
   }
 
   return (
@@ -118,22 +172,36 @@ export default () => {
       <HeaderStyle>
         <div className="container">
           <div className="top">
-            <Link to='/'><i className={classNames("fa fa-chevron-left", isPost ? 'active' : '')} /></Link>
-            <img alt="gadaba-logo" src="/img/logo.png" />
-            <h1>GadaBlog</h1>
+            {isHome
+              ?
+              open
+                ?
+                <i onClick={() => setOpen(!open)} className="fas fa-chevron-left" />
+                :
+                <i onClick={() => setOpen(!open)} className="fas fa-bars" />
+              :
+              <Link to='/'>
+                <i className="fas fa-chevron-left" />
+              </Link>
+            }
+            <Link to='/' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <img alt="gadaba-logo" src="/img/logo.png" />
+              <h1>GadaBlog</h1>
+            </Link>
           </div>
-          {loggedin
-            ?
-            <>
-              <MenuLogged logout={logout} />
-            </>
-            :
-            <>
-              <Menu />
-            </>
-          }
+          <Menu />
         </div>
-      </HeaderStyle>
+      </HeaderStyle >
+      <Hamb open={open}>
+        {/* <div className="bg" /> */}
+        <ul>
+          <li><Link to="/login"><i className="fas fa-sign-in-alt" /><p>Login</p></Link></li>
+          {/* <li><Link to="/categories"><i className="fas fa-list-ul" /><p>Categorias</p></Link></li> */}
+          <li><a href="https://luistessaro.github.io/"><i className="fas fa-user" /><p>Contato</p></a></li>
+          <li><a href="https://luistessaro.github.io/"><i className="fas fa-envelope" /><p>Envie uma mensagem</p></a></li>
+          <li><a href="https://www.youtube.com/watch?v=2dbR2JZmlWo"><i className="fas fa-bullhorn" /><p>Reclamações</p></a></li>
+        </ul>
+      </Hamb>
     </>
   )
 }
