@@ -27,8 +27,8 @@ export default ({
 
       <PostSubTiltle>
         <img src={author.photo} alt="poster" />
-        <p className="name">Written by <a className="profile-link" href="/profile">{author.name}</a></p>
-        <p className="date">{post.creation_date}</p>
+        <p className="name">Written by {author.name}</p>
+        <p className="date">{post.creation_date} - {post.views} visualizações</p>
       </PostSubTiltle>
 
       <RichTextViewer html={post.content} />

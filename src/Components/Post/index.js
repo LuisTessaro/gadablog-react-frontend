@@ -40,6 +40,7 @@ export default ({ postId }) => {
         author_id,
         content,
         url,
+        views,
       } = _post.data
 
       fetchAuthor(author_id)
@@ -55,6 +56,7 @@ export default ({ postId }) => {
         related_posts,
         content,
         url,
+        views,
       })
     } catch (e) {
       setFailed(true)
@@ -62,14 +64,10 @@ export default ({ postId }) => {
   }
 
   const handleChangeMatch = (matchedId) => {
+    console.log('vou dar fetch')
     setPost(null)
     fetchPost(matchedId)
   }
-
-
-  useEffect(() => {
-    fetchPost(postId)
-  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)

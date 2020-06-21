@@ -76,14 +76,14 @@ export default ({ author, post }) => {
         <RelatedPosts>
           <h1>Postagems relacionadas</h1>
           <div className="post-list">
-            <div className="main">
-              <h2>{post.related_posts.main.tag}</h2>
-              <h1>{post.related_posts.main.title}</h1>
-            </div>
-            <div className="alt">
-              <h2>{post.related_posts.alt.tag}</h2>
-              <h1>{post.related_posts.alt.title}</h1>
-            </div>
+            <Link to='/post/como-escrever-um-post-no-blog' className="main">
+              <h2>Programação</h2>
+              <h1>Como escrever um Post no Blog</h1>
+            </Link>
+            <Link to='/post/como-escrever-um-post-no-blog' className="alt">
+              <h2>Programação</h2>
+              <h1>Como escrever um Post no Blog só que com background branco</h1>
+            </Link>
           </div>
         </RelatedPosts>
       </PostFooter>
