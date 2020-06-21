@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import {
   GradientCard,
@@ -9,22 +9,38 @@ import {
   Tags,
 } from '../../Styles/Styled-Components/BlogPost'
 
+import { LoadIcon } from '../../Styles/Styled-Components/Loader'
+
+
 import indexToCategory from '../../Utils/indexToCategory'
 import services from '../../Utils/services'
 
 export default () => {
+  const history = useHistory()
   const [categories, setCategories] = useState(null)
   const [higestSeen, setHigestSeen] = useState(null)
   const [featured, setFeatured] = useState(null)
   const [featureTags, setFeatureTags] = useState(null)
 
-  const fetchInfos = () => {
-    const requests = []
-    
+  const fetchCats = async () => {
+    const { data } = await services.get('/api/info/categories/')
+    setCategories(data)
+  }
+
+  const fetchHigestSeen = async () => {
+    const { data } = await services.get('/api/info/posts/')
+    setHigestSeen(data)
+  }
+
+  const fetchFeatured = async () => {
+    const { data } = await services.get('/api/info/feature_post/')
+    setFeatured(data)
   }
 
   useEffect(() => {
-    fetchInfos()
+    fetchCats()
+    fetchHigestSeen()
+    fetchFeatured()
   }, [])
 
   return (
@@ -37,54 +53,95 @@ export default () => {
       <Categories>
         <h1>Categorias</h1>
         <ul>
-          <li><p>Gaems</p><span>13</span></li>
-          <li><p>Programação</p><span>5</span></li>
-          <li><p>Shit Post</p><span>7</span></li>
-          <li><p>Memes</p><span>8</span></li>
-          <li><p>Hot Takes</p><span>99</span></li>
-          <li><p>Opnião</p><span>2</span></li>
+          {categories
+            ?
+            <>
+              {Object.keys(categories).map((cat, i) => {
+                return (
+                  <li key={i}>
+                    <Link to={{
+                      pathname: `/category/${cat}`
+                    }}>
+                      {indexToCategory(cat)}
+                    </Link>
+                    <span>{categories[cat]}</span>
+                  </li>
+                )
+              })}
+            </>
+            :
+            <>
+              <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+            </>
+          }
+
         </ul>
       </Categories>
 
       <HighestSeenPosts>
         <h1>Postagens mais vistas</h1>
         <ul>
-          <li>
-            <h1>Gaems</h1>
-            <p>SangueBom - Como jogar Stellaris</p>
-          </li>
-          <li>
-            <h1>Memes</h1>
-            <p>MoltenBrain - Conheça o maior reclamção da história</p>
-          </li>
-          <li>
-            <h1>Shit Post</h1>
-            <p>Catagra - Leiam esse manga agora mesmo</p>
-          </li>
-          <li>
-            <h1>Programação</h1>
-            <p>Hails - Como usar o debugger no VsCode</p>
-          </li>
+          {higestSeen
+            ?
+            <>
+              {higestSeen.map((post, i) => {
+                return (
+                  <li key={i}>
+                    <h1>{indexToCategory(post.category)}</h1>
+                    {/* <a href={`/post/${post.url}`} >{post.post_title}</a> */}
+                    {/* <p
+                      onClick={() => {
+                        history.push(`/post/${post.url}`)
+                      }}
+                    >
+                      {post.post_title}
+                    </p> */}
+                    <Link to={`/post/${post.url}`}>
+                      {post.post_title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </>
+            :
+            <>
+              <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+            </>
+          }
         </ul>
       </HighestSeenPosts>
 
       <GradientCard>
-        <h1>Conheça o nosso cantor: Fukumoto</h1>
-        <p>O mestre da Wonderwall</p>
-        <p>Gameplays de Valorant</p>
-        <p>Sugação o dia todo</p>
-        <div className="button">Ir para o canal 	&#62;</div >
+        {featured
+          ?
+          <>
+            <h1>{featured.title}</h1>
+            {featured.content.map((content, i) => <p key={i}>{content}</p>)}
+            <a target="__blank" href={featured.link} className="button">Ir para o canal 	&#62;</a >
+          </>
+          :
+          <>
+            <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+          </>
+        }
+
       </GradientCard>
 
       <Tags>
         <h1>Tags</h1>
+
         <ul>
-          <li><p>Gaems</p></li>
-          <li><p>Programação</p></li>
-          <li><p>Shit Post</p></li>
-          <li><p>Memes</p></li>
-          <li><p>Hot Takes</p></li>
-          <li><p>Opnião</p></li>
+          {['Programação', 'Dicas', 'Musica', 'Jogos', 'Opniões'].map((tag, i, arr) => {
+            return (
+              <li key={i}>
+                <Link
+                  to={{
+                    pathname: "/tags",
+                    search: `?tag=${tag}`,
+                  }}>{tag}</Link>
+              </li>
+            )
+          })}
         </ul>
       </Tags>
     </>

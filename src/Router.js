@@ -8,6 +8,7 @@ import {
   Home,
   Login,
   NewPost,
+  Categories,
 } from './pages'
 
 export default (props) => {
@@ -16,6 +17,7 @@ export default (props) => {
       <Switch>
         <MainLayout exact path="/" component={Home} />
         <MainLayout exact path="/post/:id" component={BlogPost} {...props} />
+        <MainLayout exact path="/category/:id" component={Categories} {...props} />
         <Route exact path="/login" component={Login} />
         {
           localStorage.getItem('token') &&

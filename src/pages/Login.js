@@ -94,12 +94,10 @@ export default () => {
     setSubmitting(true)
     try {
       const { data } = await services.post(`/api/auth/`, values)
-      console.log(data.token)
       localStorage.setItem('token', data.token)
       setSubmitting(false)
       setLoggedin(true)
     } catch (e) {
-      console.log('erro: ', e)
       setLoginFail({ ...loginFail, message: e, status: true })
       setSubmitting(false)
     }

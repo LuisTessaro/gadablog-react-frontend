@@ -122,13 +122,13 @@ export const Categories = styled.div`
         border: none;
       }
 
-      p {
+      a {
         font-weight: 500;
         font-size: 16px;
         color: #6e7795;
-        color: #6e7795;
         font-style: italic;
         cursor: pointer;
+        text-decoration: none;
         
         &:hover {
           text-decoration: underline;
@@ -158,6 +158,7 @@ export const HighestSeenPosts = styled.div`
   }
   ul {
     width:100%;
+
     li{
       display: flex;
       flex-direction: column;
@@ -167,12 +168,16 @@ export const HighestSeenPosts = styled.div`
       padding-top: ${spacers.padding};
       border-bottom: 1px solid lightgray;
 
-      h1{
+      &:last-child {
+        border: none;
+      }
+
+      h1 {
         color: #6e7795;
         font-size: 13px;
       }
 
-      p{
+      a {
         font-weight: 500;
         font-size: 16px;
         color: #6e7795;
@@ -202,12 +207,13 @@ export const Tags = styled.div`
     justify-content: flex-start;
     flex-wrap: wrap;
     li {
-      p {
+      a {
         padding-right: ${spacers.padding};
         padding-bottom: ${spacers.padding};
         color: #c1c1c1;
         font-size: 14px;
         cursor: pointer;
+        text-decoration:none;
 
         &:hover {
           text-decoration: underline;

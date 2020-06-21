@@ -12,6 +12,7 @@ import { MiddlePos, LoadIcon } from '../../Styles/Styled-Components/Loader'
 import services from '../../Utils/services'
 
 export default ({ postId }) => {
+  const matchedId = postId
   const [author, setAuthor] = useState(null)
   const [post, setPost] = useState(null)
   const [failed, setFailed] = useState(false)
@@ -26,6 +27,7 @@ export default ({ postId }) => {
       setFailed(true)
     }
   }
+
 
   const fetchPost = async (postId) => {
     try {
@@ -43,8 +45,6 @@ export default ({ postId }) => {
 
       fetchAuthor(author_id)
 
-      console.log(content)
-
       setPost({
         title_image,
         tagList,
@@ -61,9 +61,20 @@ export default ({ postId }) => {
     }
   }
 
+  const handleChangeMatch = (matchedId) => {
+    setPost(null)
+    fetchPost(matchedId)
+  }
+
+
   useEffect(() => {
     fetchPost(postId)
   }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    handleChangeMatch(matchedId)
+  }, [matchedId])
 
   return (
     <>
