@@ -72,7 +72,7 @@ export default ({ match }) => {
                 ?
                 <>
                   <PostList>
-                    {posts.map((post, i) => {
+                    {posts.reverse().map((post, i) => {
                       return (
                         <li key={i}>
                           <PostCard post={post} />
