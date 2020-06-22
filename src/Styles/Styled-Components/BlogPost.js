@@ -297,12 +297,17 @@ export const FooterInfo = styled.div`
     font-weight: 500;
     p {
       padding-bottom: 16px;
+      text-align: right;
     }
     color: ${colors.dark};
     i{
       padding-right: 5px;
     }
-
+    .links {
+      button {
+        margin-left: 8px;
+      }
+    }
     
   }
   @media (max-width: 768px) {

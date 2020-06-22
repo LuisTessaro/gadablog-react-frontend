@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import { Link, useHistory } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import {
   GradientCard,
@@ -16,11 +15,14 @@ import { LoadIcon } from '../../Styles/Styled-Components/Loader'
 import indexToCategory from '../../Utils/indexToCategory'
 import services from '../../Utils/services'
 
+const normalizer = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]+/ig, "+").toLowerCase()
+
 export default () => {
-  // const history = useHistory()
+  const history = useHistory()
   const [categories, setCategories] = useState(null)
   const [higestSeen, setHigestSeen] = useState(null)
   const [featured, setFeatured] = useState(null)
+  const [search, setSearch] = useState('')
   // const [featureTags, setFeatureTags] = useState(null)
 
   const fetchCats = async () => {
@@ -38,6 +40,12 @@ export default () => {
     setFeatured(data)
   }
 
+  const fetchSearch = () => {
+    if (search) {
+      history.push(`/search?query=${normalizer(search)}`)
+    }
+  }
+
   useEffect(() => {
     fetchCats()
     fetchHigestSeen()
@@ -47,8 +55,16 @@ export default () => {
   return (
     <>
       <SearchBox>
-        <input type="text" id="name" name="name" placeholder="Buscar por palavra" />
-        <i className="fas fa-search" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              fetchSearch('enter!')
+            }
+          }}
+          type="text" id="name" name="name" placeholder="Buscar por palavra" />
+        <i onClick={fetchSearch} style={{ cursor: 'pointer' }} className="fas fa-search" />
       </SearchBox>
 
       <Categories>
@@ -61,7 +77,7 @@ export default () => {
                 return (
                   <li key={i}>
                     <Link to={{
-                      pathname: `/category/${cat}`
+                      pathname: `/search?query=${normalizer(cat)}`
                     }}>
                       {indexToCategory(cat)}
                     </Link>
@@ -118,7 +134,7 @@ export default () => {
           <>
             <h1>{featured.title}</h1>
             {featured.content.map((content, i) => <p key={i}>{content}</p>)}
-            <a target="__blank" href={featured.link} className="button">Ir para o canal 	&#62;</a >
+            <a target="__blank" href={featured.link} className="button">{featured.linkTitle}	&#62;</a >
           </>
           :
           <>
@@ -137,8 +153,7 @@ export default () => {
               <li key={i}>
                 <Link
                   to={{
-                    pathname: "/tags",
-                    search: `?tag=${tag}`,
+                    pathname: `/search?query=${normalizer(tag)}`,
                   }}>{tag}</Link>
               </li>
             )

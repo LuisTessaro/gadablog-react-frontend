@@ -76,28 +76,23 @@ export default ({ postId }) => {
     handleChangeMatch(matchedId)
   }, [matchedId])
 
+
+  if (failed)
+    return <Redirect to="/page404" />
+
+  if (!author || !post)
+    return (
+      <>
+        <MiddlePos>
+          <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+        </MiddlePos>
+      </>
+    )
+
   return (
     <>
-      {failed
-        ?
-        <>
-          <Redirect to="/page404" />
-        </>
-        :
-        <>
-          {author && post
-            ?
-            <>
-              <PostBody author={author} post={post} />
-              <PostFooter author={author} post={post} />
-            </>
-            :
-            <MiddlePos>
-              <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
-            </MiddlePos>
-          }
-        </>
-      }
+      <PostBody author={author} post={post} />
+      <PostFooter author={author} post={post} />
     </>
   )
 }
