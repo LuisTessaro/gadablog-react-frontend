@@ -77,7 +77,7 @@ export default () => {
                 return (
                   <li key={i}>
                     <Link to={{
-                      pathname: `/search?query=${normalizer(cat)}`
+                      pathname: `/category/${cat}`
                     }}>
                       {indexToCategory(cat)}
                     </Link>

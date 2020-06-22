@@ -29,7 +29,7 @@ export default styled.div`
     }
   }
   
-  .sectionTitle {
+  .section-title {
     margin-bottom: ${spacers.margin};
     font-size: 20px;
     color: ${colors.textColor};
