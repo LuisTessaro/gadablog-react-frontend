@@ -19,7 +19,11 @@ import {
   EmailShareButton,
   LinkedinIcon,
   LinkedinShareButton,
+  TelegramShareButton,
+  TelegramIcon,
 } from 'react-share'
+
+import normalizer from '../../Utils/textNormalizer'
 
 export default ({ author, post }) => {
   return (
@@ -33,8 +37,8 @@ export default ({ author, post }) => {
                 key={i}
                 as={Link}
                 to={{
-                  pathname: "/tags",
-                  search: `?tag=${tag}`,
+                  pathname: "/search",
+                  search: `?query=${normalizer(tag)}`,
                 }}
               >
                 {`${tag}${arr.length !== i + 1 ? ', ' : ''}`}
@@ -56,6 +60,9 @@ export default ({ author, post }) => {
               <LinkedinShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
                 <LinkedinIcon size={32} round={true} />
               </LinkedinShareButton>
+              <TelegramShareButton url={`https://gadablog.herokuapp.com/post/${post.url}`} >
+                <TelegramIcon size={32} round={true} />
+              </TelegramShareButton>
             </div>
           </div>
 

@@ -21,7 +21,6 @@ export const BodyStyle = styled.div`
 
 export const Content = styled.div`
   box-sizing: border-box;
-  min-height: 100vh;
   flex: 7;
   padding-right: calc(${spacers.padding} * 4);
   padding-bottom: calc(${spacers.padding} * 4);
@@ -263,6 +262,10 @@ export const PostSubTiltle = styled.div`
     }
   }
 
+  div {
+    display: flex;
+  }
+
   .date{
     margin-right: calc(${spacers.margin} / 4);
   }
@@ -272,6 +275,12 @@ export const PostSubTiltle = styled.div`
     color: #0F7FCF;
     i{
       margin-right: 4px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    div {
+      flex-direction: column;
     }
   }
 `
@@ -300,17 +309,27 @@ export const FooterInfo = styled.div`
       text-align: right;
     }
     color: ${colors.dark};
-    i{
+    i {
       padding-right: 5px;
     }
+    
     .links {
       button {
         margin-left: 8px;
+        @media (max-width: 768px) {
+          margin: 0;
+          margin-right: 8px;
+        }
       }
     }
     
   }
   @media (max-width: 768px) {
+    .share {
+      p {
+        text-align: left;
+      }
+    }
     display: flex;
     flex-direction: column;
     .tags {

@@ -23,18 +23,19 @@ import PostCard from '../Components/PostCard'
 const CategoryName = styled.h1`
   color: ${colors.main};
   margin-bottom: 32px;
-  font-size: 2rem;
+  font-size: 1rem;
 `
 
-export default ({ match }) => {
+export default ({ location }) => {
   const [posts, setPosts] = useState(undefined)
   const [failed, setFailed] = useState(false)
 
-  const matchedId = match.params.id
+  const query = location.search
+  const title = query.split('?query=')
 
   const fetchPosts = async () => {
     try {
-      const _posts = await services.get(`api/info/category/${matchedId}`)
+      const _posts = await services.get(`api/search${query}`)
       setPosts(_posts.data)
     } catch (e) {
       setFailed(true)
@@ -48,7 +49,7 @@ export default ({ match }) => {
 
   useEffect(() => {
     handleChangeMatch()
-  }, [matchedId])
+  }, [query])
 
   const handleChangeMatch = () => {
     window.scrollTo(0, 0)
@@ -59,7 +60,7 @@ export default ({ match }) => {
   return (
     <>
       <SpacerTop multiplier={12} />
-      <CategoryName>{indexToCategory(matchedId)}</CategoryName>
+      <CategoryName>Resultado da pesquisa: {title}</CategoryName>
       {
         failed
           ?

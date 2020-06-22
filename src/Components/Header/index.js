@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { colors } from '../../Styles/StyleGuide'
 
@@ -89,7 +89,7 @@ const Hamb = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 375px;
+  width: 250px;
   min-height: 100vh;
   background-color: #fff;
   
@@ -135,6 +135,7 @@ const Hamb = styled.div`
 
 export default ({ match }) => {
   const matchedUrl = match.url
+  const history = useHistory()
 
   const [loggedin, setLoggedin] = useState(false)
   const [isHome, setIsHome] = useState(matchedUrl !== '/' ? false : true)
@@ -165,15 +166,11 @@ export default ({ match }) => {
           <div className="top">
             {isHome
               ?
-              open
-                ?
-                <i onClick={() => setOpen(!open)} className="fas fa-chevron-left" />
-                :
-                <i onClick={() => setOpen(!open)} className="fas fa-bars" />
+              <i onClick={() => setOpen(!open)} className="fas fa-bars" />
               :
-              <Link to='/'>
+              <div onClick={() => history.goBack()}>
                 <i className="fas fa-chevron-left" />
-              </Link>
+              </div>
             }
             <Link to='/' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img alt="gadaba-logo" src="/img/logo.png" />
@@ -184,10 +181,10 @@ export default ({ match }) => {
             ?
             <>
               <p style={{ color: '#fff' }}>Logado</p>
-              <Link to='/new_post'><LoginButton className="fas fa-newspaper"> Criar post</LoginButton> </Link>
+              <Link to='/new_post'><LoginButton className="fas fa-newspaper" /></Link>
             </>
             :
-            <Link to='/login'><LoginButton className="fas fa-sign-in-alt"> Login</LoginButton> </Link>
+            <Link to='/login'><LoginButton className="fas fa-sign-in-alt" /></Link>
           }
         </div>
       </HeaderStyle >
@@ -195,7 +192,6 @@ export default ({ match }) => {
       <Hamb open={open}>
         <ul>
           <li><div className="back" onClick={() => setOpen(false)}><i className="fas fa-arrow-left" /><p>Fechar</p></div></li>
-          {/* <li><Link to="/categories"><i className="fas fa-list-ul" /><p>Categorias</p></Link></li> */}
           {loggedin
             ?
             <>

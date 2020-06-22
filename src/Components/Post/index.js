@@ -47,12 +47,13 @@ export default ({ postId }) => {
 
       fetchAuthor(author_id)
 
+
       setPost({
         title_image,
         tagList,
         post_title,
         category,
-        creation_date: moment(new Date(parseInt(author_id.toString().substring(0, 8), 16) * 1000).toString()).format("DD/MM/YYYY"),
+        creation_date: moment(new Date(parseInt(_id.substring(0, 8), 16) * 1000)).format("DD/MM/YYYY"),
         post_id: _id,
         author_id,
         related_posts,
@@ -82,11 +83,9 @@ export default ({ postId }) => {
 
   if (!author || !post)
     return (
-      <>
-        <MiddlePos>
-          <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
-        </MiddlePos>
-      </>
+      <MiddlePos>
+        <LoadIcon speed='1s' size='2rem' className="fas fa-spinner" />
+      </MiddlePos>
     )
 
   return (

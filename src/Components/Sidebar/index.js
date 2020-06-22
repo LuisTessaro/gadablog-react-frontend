@@ -11,11 +11,10 @@ import {
 
 import { LoadIcon } from '../../Styles/Styled-Components/Loader'
 
-
 import indexToCategory from '../../Utils/indexToCategory'
 import services from '../../Utils/services'
 
-const normalizer = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]+/ig, "+").toLowerCase()
+import normalizer from '../../Utils/textNormalizer'
 
 export default () => {
   const history = useHistory()
@@ -153,8 +152,12 @@ export default () => {
               <li key={i}>
                 <Link
                   to={{
-                    pathname: `/search?query=${normalizer(tag)}`,
-                  }}>{tag}</Link>
+                    pathname: "/search",
+                    search: `?query=${normalizer(tag)}`,
+                  }}
+                >
+                  {tag}
+                </Link>
               </li>
             )
           })}

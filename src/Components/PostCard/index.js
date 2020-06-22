@@ -8,6 +8,7 @@ import indexToCategory from '../../Utils/indexToCategory'
 export default ({ post }) => {
   const [loaded, setLoaded] = useState(false)
 
+  const aboutSplit = post.about.length > 340 ? post.about.slice(0, 340) + ' ...leia mais' : post.about.length
   return (
     <Link to={`/post/${post.url}`}>
 
@@ -21,13 +22,13 @@ export default ({ post }) => {
           <div className="top">
             <div>
               <h1>{post.post_title}</h1>
-              <p>{indexToCategory(post.category)}</p>
+              <p>{indexToCategory(post.category)} - {post.author_name}</p>
             </div>
             <i className="fa fa-chevron-right" />
           </div>
           <p className="tag">{post.tag}</p>
         </div>
-        <p className="description">{post.about}</p>
+        <p className="description">{aboutSplit}</p>
       </div>
     </Link>
   )
