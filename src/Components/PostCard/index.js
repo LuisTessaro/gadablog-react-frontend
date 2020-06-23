@@ -8,7 +8,7 @@ import indexToCategory from '../../Utils/indexToCategory'
 export default ({ post }) => {
   const [loaded, setLoaded] = useState(false)
 
-  const aboutSplit = post.about.length > 340 ? post.about.slice(0, 340) + ' ...leia mais' : post.about.length
+  const aboutSplit = post.about.length > 340 ? post.about.slice(0, 340) + ' ...leia mais' : post.about
   return (
     <Link to={`/post/${post.url}`}>
 
