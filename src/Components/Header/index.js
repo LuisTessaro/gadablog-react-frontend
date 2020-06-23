@@ -181,7 +181,6 @@ export default ({ match }) => {
             ?
             <>
               <p style={{ color: '#fff' }}>Logado</p>
-              <Link to='/new_post'><LoginButton className="fas fa-newspaper" /></Link>
             </>
             :
             <Link to='/login'><LoginButton className="fas fa-sign-in-alt" /></Link>
@@ -196,7 +195,7 @@ export default ({ match }) => {
             ?
             <>
               <li><a href="https://luistessaro.github.io/"><i className="fas fa-user" /><p>Perfil</p></a></li>
-              <li><a href="https://luistessaro.github.io/"><i className="fas fa-newspaper" /><p>Ver meus posts</p></a></li>
+              <li><Link to="/profile/my_posts"><i className="fas fa-sign-in-alt" /><p>Ver meus posts</p></Link></li>
               <li><div className="back" onClick={logout}> <i className="fas fa-sign-out-alt" /><p>Logout</p></div></li>
             </>
             :
